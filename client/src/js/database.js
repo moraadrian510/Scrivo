@@ -1,24 +1,48 @@
-import { openDB } from 'idb';
+import { openDB as idbOpenDB } from 'idb';
 
-const initdb = async () =>
-  openDB('jate', 1, {
-    upgrade(db) {
-      if (db.objectStoreNames.contains('jate')) {
-        console.log('jate database already exists');
-        return;
-      }
-      db.createObjectStore('jate', { keyPath: 'id', autoIncrement: true });
-      console.log('jate database created');
-    },
-  });
+const initDb = async () => {
+  try {
+    const jateDb = await idbOpenDB('jate', 1);
+    if (jateDb.objectStoreNames.contains('jate')) {
+      console.log('jate database already exists');
+      return;
+    }
+    jateDb.createObjectStore('jate', { keyPath: 'id', autoIncrement: true });
+    console.log('jate database created');
+  } catch (error) {
+    console.error('Error initializing database:', error);
+  }
+};
 
-// TODO: Add logic to a method that accepts some content and adds it to the database
 export const putDb = async (content) => {
-  console.error('putDb not implemented');
+  try {
+    console.log('PUT to the database');
+    const jateDb = await idbOpenDB('jate', 1);
+    const tx = jateDb.transaction('jate', 'readwrite');
+    const store = tx.objectStore('jate');
+    const request = store.put({ id: 1, value: content });
+    const result = await request;
+    console.log(':rocket: - data saved', result.value);
+  } catch (error) {
+    console.error('Error putting data into database:', error);
+  }
+};
 
-  const contactDb = await openDB('jate', 1)
-}
-// TODO: Add logic for a method that gets all the content from the database
-export const getDb = async () => console.error('getDb not implemented');
+export const getDb = async () => {
+  try {
+    console.log('GET from the database');
+    const jateDb = await idbOpenDB('jate', 1);
+    const tx = jateDb.transaction('jate', 'readonly');
+    const store = tx.objectStore('jate');
+    const request = store.get(1);
+    const result = await request;
+    result
+      ? console.log(':rocket: - data retrieved', result.value)
+      : console.log(':rocket: - data not found');
+    return result?.value;
+  } catch (error) {
+    console.error('Error getting data from database:', error);
+  }
+};
 
-initdb();
+initDb();

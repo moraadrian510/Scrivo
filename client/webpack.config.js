@@ -40,7 +40,7 @@ module.exports = () => {
         description: 'Write Your Thoughts!',
         background_color: '#225ca3',
         theme_color: '#225ca3',
-        start_url: './',
+        start_url: '/',
         publicPath: './',
         icons: [
           {
