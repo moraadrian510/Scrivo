@@ -11,12 +11,20 @@
 
 
 ## Table of Contents
-
+- [License](#license)
 - [Overview](#overview)
 - [Built With](#built-with)
 - [Live Preview](#Live-Preview)
 - [Contact](#contact)
 
+
+## License
+
+![](https://img.shields.io/badge/License-MIT-red.svg) 
+
+Copyright © 2007 Free Software Foundation, Inc. <https://fsf.org/>
+
+Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
 
 ## Overview
 
